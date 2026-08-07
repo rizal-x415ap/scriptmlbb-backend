@@ -74,7 +74,7 @@ class PremiumTokenResource extends Resource
                     ->sortable()
                     ->copyable()
                     ->badge()
-                    ->color('amber')
+                    ->color('warning')
                     ->extraAttributes(['class' => 'font-mono text-base font-bold']),
 
                 Tables\Columns\IconColumn::make('is_active')

@@ -18,7 +18,8 @@ class ListPremiumTokens extends ListRecords
             Actions\CreateAction::make()->label('➕ Buat Token Baru'),
             Actions\Action::make('generateBatch')
                 ->label('⚡ Generate 5 Token Sekaligus')
-                ->color('amber')
+                ->color('warning')
+                ->button()
                 ->icon('heroicon-o-bolt')
                 ->action(function () {
                     for ($i = 0; $i < 5; $i++) {

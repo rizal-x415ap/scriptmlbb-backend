@@ -6,7 +6,13 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['*'],
+    'allowed_origins' => [
+        'https://rizaldev.my.id',
+        'https://www.rizaldev.my.id',
+        'https://scriptmlbb-frontend.pages.dev',
+        'http://localhost:5173',
+        'http://localhost:4173',
+    ],
 
     'allowed_origins_patterns' => [],
 

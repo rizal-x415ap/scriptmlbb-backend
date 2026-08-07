@@ -36,7 +36,21 @@ class StoreCommentRequest extends FormRequest
     {
         $cleanName = strip_tags($this->author_name ?? '');
         $cleanEmail = strtolower(trim(strip_tags($this->author_email ?? '')));
-        $cleanContent = strip_tags($this->content ?? '');
+        $rawContent = $this->content ?? '';
+
+        // Auto-extract plain text if content was accidentally passed as a JSON string
+        if (is_string($rawContent) && (str_starts_with(trim($rawContent), '{') || str_starts_with(trim($rawContent), '['))) {
+            try {
+                $decoded = json_decode($rawContent, true);
+                if (is_array($decoded) && !empty($decoded['content'])) {
+                    $rawContent = $decoded['content'];
+                }
+            } catch (\Throwable $e) {
+                // Keep raw string
+            }
+        }
+
+        $cleanContent = strip_tags((string)$rawContent);
 
         // Strip HTML tags and script elements
         $cleanContent = preg_replace('/<[^>]*>/', '', $cleanContent);

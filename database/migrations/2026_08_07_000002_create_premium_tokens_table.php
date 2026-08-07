@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('device_fingerprint')->nullable();
             $table->string('device_name')->nullable();
             $table->timestamp('activated_at')->nullable();
-            $table->timestamp('expires_at');
+            $table->timestamp('expires_at')->nullable();
             $table->boolean('is_active')->default(true);
             $table->timestamps();
         });

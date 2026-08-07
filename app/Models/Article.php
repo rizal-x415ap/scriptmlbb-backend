@@ -19,7 +19,6 @@ class Article extends Model
         'app_developer',
         'app_version',
         'app_size',
-        'app_min_android',
         'app_download_url',
         'download_links',
         'app_screenshots',

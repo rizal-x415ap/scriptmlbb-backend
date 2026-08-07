@@ -87,10 +87,6 @@ class ArticleResource extends Resource
                                     ->label('Ukuran File Download')
                                     ->placeholder('e.g. 45.2 MB'),
 
-                                Forms\Components\TextInput::make('app_min_android')
-                                    ->label('Kebutuhan OS Minimal')
-                                    ->placeholder('e.g. Android 5.0+'),
-
                                 Forms\Components\TagsInput::make('app_features')
                                     ->label('Tag / Badge Fitur Keunggulan Script (Features Badges)')
                                     ->placeholder('Ketik fitur (cth: Anti-Banned 100%) lalu tekan Enter')

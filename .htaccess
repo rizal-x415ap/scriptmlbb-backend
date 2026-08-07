@@ -2,7 +2,17 @@
     Options +FollowSymLinks -MultiViews -Indexes
     RewriteEngine On
 
-    # Redirect all requests to public folder
+    # Handle Authorization Header
+    RewriteCond %{HTTP:Authorization} .
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+    # Serve static assets in public folder
     RewriteCond %{REQUEST_URI} !^/public/
+    RewriteCond %{DOCUMENT_ROOT}/public%{REQUEST_URI} -f [OR]
+    RewriteCond %{DOCUMENT_ROOT}/public%{REQUEST_URI} -d
     RewriteRule ^(.*)$ public/$1 [L]
+
+    # Route all dynamic requests (like /admin, /api/...) directly to public/index.php
+    RewriteCond %{REQUEST_URI} !^/public/
+    RewriteRule ^(.*)$ public/index.php [L]
 </IfModule>

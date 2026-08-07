@@ -150,19 +150,24 @@ class ArticleResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('title')->searchable()->sortable(),
-                Tables\Columns\TextColumn::make('category.name')->sortable(),
+                Tables\Columns\TextColumn::make('title')->label('Judul Artikel')->searchable()->sortable(),
+                Tables\Columns\TextColumn::make('category.name')->label('Kategori')->sortable(),
                 Tables\Columns\TextColumn::make('status')
+                    ->label('Status')
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
                         'draft' => 'warning',
                         'published' => 'success',
                         'archived' => 'danger',
                     }),
-                Tables\Columns\IconColumn::make('is_featured')->boolean(),
-                Tables\Columns\TextColumn::make('likes_count')->sortable(),
-                Tables\Columns\TextColumn::make('published_at')->dateTime()->sortable(),
+                Tables\Columns\IconColumn::make('is_featured')->label('Featured')->boolean(),
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->label('Terakhir Diubah')
+                    ->dateTime('d M Y, H:i')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('published_at')->label('Dipublikasi')->dateTime('d M Y')->sortable(),
             ])
+            ->defaultSort('updated_at', 'desc')
             ->filters([
                 Tables\Filters\SelectFilter::make('status')
                     ->options([

@@ -512,7 +512,7 @@ class ManageSiteSettings extends Page implements Forms\Contracts\HasForms
                                     ->schema([
                                         Forms\Components\TextInput::make('premiumBuyUrl')
                                             ->label('Link WhatsApp Pembelian Token Premium')
-                                            ->placeholder('https://wa.me/6281234567890?text=Halo%20Admin,%20saya%20mau%20beli%20token%20premium')
+                                            ->placeholder('https://wa.me/6285262335849?text=Min%20Saya%20mau%20beli%20token%20Script%20MLBB')
                                             ->helperText('Pengguna akan diarahkan ke URL WhatsApp ini saat mengklik "Beli Token Premium"')
                                             ->columnSpanFull(),
 

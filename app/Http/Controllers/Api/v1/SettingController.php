@@ -109,7 +109,7 @@ class SettingController extends Controller
                 'globalBodyOpenAdScript' => '',
                 'globalBodyCloseAdScript' => '',
                 // Premium Subscription Settings
-                'premiumBuyUrl' => 'https://wa.me/6281234567890?text=Halo%20Admin,%20saya%20mau%20beli%20token%20premium%20blog',
+                'premiumBuyUrl' => 'https://wa.me/6285262335849?text=Min%20Saya%20mau%20beli%20token%20Script%20MLBB',
                 'premiumMonthlyPrice' => '5.000',
             ];
 

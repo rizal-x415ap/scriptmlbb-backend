@@ -10,31 +10,40 @@ class HomeFeedController extends Controller
 {
     public function __invoke(): JsonResponse
     {
-        $data = \Illuminate\Support\Facades\Cache::remember('api_home_feed_data', 300, function () {
-            $featured = Article::with(['category', 'author'])
-                ->published()
-                ->featured()
-                ->latest('published_at')
-                ->first();
+        $page = (int) request()->get('page', 1);
+        $cacheKey = "api_home_feed_data_page_{$page}";
+
+        $data = \Illuminate\Support\Facades\Cache::remember($cacheKey, 300, function () use ($page) {
+            $featured = null;
+            if ($page === 1) {
+                $featured = Article::with(['category', 'author'])
+                    ->published()
+                    ->featured()
+                    ->latest('published_at')
+                    ->first();
+            }
 
             $feed = Article::with(['category', 'author'])
                 ->published()
                 ->orderByDesc('is_featured')
                 ->latest('published_at')
-                ->paginate(15);
+                ->paginate(12, ['*'], 'page', $page);
 
-            $topics = \App\Models\Category::withCount(['articles' => function ($q) {
-                $q->published();
-            }])
-            ->orderByDesc('articles_count')
-            ->get()
-            ->map(function ($cat) {
-                return [
-                    'name' => $cat->name,
-                    'slug' => $cat->slug,
-                    'count' => $cat->articles_count,
-                ];
-            });
+            $topics = [];
+            if ($page === 1) {
+                $topics = \App\Models\Category::withCount(['articles' => function ($q) {
+                    $q->published();
+                }])
+                ->orderByDesc('articles_count')
+                ->get()
+                ->map(function ($cat) {
+                    return [
+                        'name' => $cat->name,
+                        'slug' => $cat->slug,
+                        'count' => $cat->articles_count,
+                    ];
+                });
+            }
 
             return [
                 'featured' => $featured,
@@ -44,6 +53,7 @@ class HomeFeedController extends Controller
                     'current_page' => $feed->currentPage(),
                     'last_page' => $feed->lastPage(),
                     'total' => $feed->total(),
+                    'per_page' => $feed->perPage(),
                 ]
             ];
         });

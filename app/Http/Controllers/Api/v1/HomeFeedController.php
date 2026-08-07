@@ -27,7 +27,7 @@ class HomeFeedController extends Controller
                 ->published()
                 ->orderByDesc('is_featured')
                 ->latest('published_at')
-                ->paginate(12, ['*'], 'page', $page);
+                ->paginate(5, ['*'], 'page', $page);
 
             $topics = [];
             if ($page === 1) {

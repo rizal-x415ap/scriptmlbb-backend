@@ -11,11 +11,12 @@ class HomeFeedController extends Controller
     public function __invoke(): JsonResponse
     {
         $page = (int) request()->get('page', 1);
-        $cacheKey = "api_home_feed_data_page_{$page}";
+        $category = request()->get('category');
+        $cacheKey = "api_home_feed_data_page_{$page}_cat_" . md5($category ?? 'all');
 
-        $data = \Illuminate\Support\Facades\Cache::remember($cacheKey, 300, function () use ($page) {
+        $data = \Illuminate\Support\Facades\Cache::remember($cacheKey, 300, function () use ($page, $category) {
             $featured = null;
-            if ($page === 1) {
+            if ($page === 1 && (!$category || $category === 'All')) {
                 $featured = Article::with(['category', 'author'])
                     ->published()
                     ->featured()
@@ -23,9 +24,14 @@ class HomeFeedController extends Controller
                     ->first();
             }
 
-            $feed = Article::with(['category', 'author'])
-                ->published()
-                ->orderByDesc('is_featured')
+            $feedQuery = Article::with(['category', 'author'])
+                ->published();
+
+            if ($category && $category !== 'All') {
+                $feedQuery->whereHas('category', fn($q) => $q->where('name', $category)->orWhere('slug', $category));
+            }
+
+            $feed = $feedQuery->orderByDesc('is_featured')
                 ->latest('published_at')
                 ->paginate(5, ['*'], 'page', $page);
 

@@ -65,11 +65,6 @@ class ArticleResource extends Resource
                                     ->default('playstore')
                                     ->columnSpanFull(),
 
-                                Forms\Components\TextInput::make('app_icon')
-                                    ->label('Icon Utama Aplikasi / Script (Rasio 1:1)')
-                                    ->placeholder('https://images.unsplash.com/photo-...')
-                                    ->helperText('URL gambar icon persegi rasio 1:1'),
-
                                 Forms\Components\TextInput::make('app_poster_35')
                                     ->label('Poster Detail Download (Rasio 3:5)')
                                     ->placeholder('https://images.unsplash.com/photo-...')

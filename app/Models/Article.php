@@ -29,7 +29,6 @@ class Article extends Model
         'excerpt',
         'content',
         'cover_image',
-        'app_icon',
         'app_poster_35',
         'read_time',
         'status',

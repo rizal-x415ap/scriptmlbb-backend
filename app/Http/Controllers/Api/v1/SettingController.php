@@ -229,14 +229,30 @@ class SettingController extends Controller
     {
         $baseUrl = rtrim(SiteSetting::get('siteBaseUrl', 'http://localhost:5173'), '/');
         $articles = \App\Models\Article::where('status', 'published')->get();
+        $pages = \App\Models\Page::where('status', 'published')->get();
 
         $xml = '<?xml version="1.0" encoding="UTF-8"?>';
         $xml .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
 
         $xml .= '<url><loc>' . $baseUrl . '/</loc><priority>1.0</priority><changefreq>daily</changefreq></url>';
         $xml .= '<url><loc>' . $baseUrl . '/archive</loc><priority>0.8</priority><changefreq>daily</changefreq></url>';
+        $xml .= '<url><loc>' . $baseUrl . '/hitung-wr</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>';
+        $xml .= '<url><loc>' . $baseUrl . '/contact</loc><priority>0.5</priority><changefreq>monthly</changefreq></url>';
         $xml .= '<url><loc>' . $baseUrl . '/about</loc><priority>0.5</priority><changefreq>monthly</changefreq></url>';
 
+        // Include published static pages
+        foreach ($pages as $page) {
+            $slug = $page->slug ?? $page->id;
+            $updatedAt = $page->updated_at ? $page->updated_at->toAtomString() : date('c');
+            $xml .= '<url>';
+            $xml .= '<loc>' . $baseUrl . '/page/' . $slug . '</loc>';
+            $xml .= '<lastmod>' . $updatedAt . '</lastmod>';
+            $xml .= '<changefreq>monthly</changefreq>';
+            $xml .= '<priority>0.6</priority>';
+            $xml .= '</url>';
+        }
+
+        // Include published articles
         foreach ($articles as $article) {
             $slug = $article->slug ?? $article->id;
             $updatedAt = $article->updated_at ? $article->updated_at->toAtomString() : date('c');

@@ -347,111 +347,71 @@ class ManageSiteSettings extends Page implements Forms\Contracts\HasForms
                         Forms\Components\Tabs\Tab::make('📢 Slot Iklan (Ad Placements)')
                             ->schema([
                                 Forms\Components\Section::make('Iklan Halaman Home (Beranda)')
-                                    ->description('Kelola posisi slot iklan di halaman beranda dengan pemisahan skrip untuk Desktop (PC) & Mobile (HP)')
+                                    ->description('Kelola 4 posisi slot iklan di halaman beranda')
                                     ->schema([
                                         Forms\Components\Toggle::make('showHomeSidebarAd1')
                                             ->label('Aktifkan Iklan Sidebar 1 (Top Sidebar Right)')
                                             ->default(true),
-                                        Forms\Components\Grid::make(2)->schema([
-                                            Forms\Components\Textarea::make('homeSidebarAd1ScriptDesktop')
-                                                ->label('💻 Skrip Iklan Desktop (PC/Laptop)')
-                                                ->helperText('Saran ukuran Desktop: 300x250 atau 160x600')
-                                                ->placeholder('<ins class="adsbygoogle" style="display:inline-block;width:300px;height:250px"...></ins>')
-                                                ->rows(3),
-                                            Forms\Components\Textarea::make('homeSidebarAd1ScriptMobile')
-                                                ->label('📱 Skrip Iklan Mobile (Smartphone)')
-                                                ->helperText('Saran ukuran Mobile: 300x250 atau 320x50')
-                                                ->placeholder('<ins class="adsbygoogle" style="display:inline-block;width:300px;height:250px"...></ins>')
-                                                ->rows(3),
-                                        ]),
+                                        Forms\Components\Textarea::make('homeSidebarAd1Script')
+                                            ->label('Kode Skrip HTML / JS Iklan Sidebar 1')
+                                            ->placeholder('<script async src="https://pagead2.googlesyndication.com/..."></script>')
+                                            ->rows(3)
+                                            ->columnSpanFull(),
 
                                         Forms\Components\Toggle::make('showHomeSidebarAd2')
                                             ->label('Aktifkan Iklan Sidebar 2 (Bottom Sidebar Right)')
                                             ->default(true),
-                                        Forms\Components\Grid::make(2)->schema([
-                                            Forms\Components\Textarea::make('homeSidebarAd2ScriptDesktop')
-                                                ->label('💻 Skrip Iklan Desktop (PC/Laptop)')
-                                                ->helperText('Saran ukuran Desktop: 300x250 atau 160x600')
-                                                ->rows(3),
-                                            Forms\Components\Textarea::make('homeSidebarAd2ScriptMobile')
-                                                ->label('📱 Skrip Iklan Mobile (Smartphone)')
-                                                ->helperText('Saran ukuran Mobile: 300x250 atau 320x50')
-                                                ->rows(3),
-                                        ]),
+                                        Forms\Components\Textarea::make('homeSidebarAd2Script')
+                                            ->label('Kode Skrip HTML / JS Iklan Sidebar 2')
+                                            ->placeholder('<ins class="adsbygoogle" ...></ins>')
+                                            ->rows(3)
+                                            ->columnSpanFull(),
 
                                         Forms\Components\Toggle::make('showHomeFeedAd')
-                                            ->label('Aktifkan Iklan Feed Utama (Disisipkan setelah artikel ke-3)')
+                                            ->label('Aktifkan Iklan Feed Utama (Diantara artikel setelah artikel ke-3)')
                                             ->default(true),
-                                        Forms\Components\Grid::make(2)->schema([
-                                            Forms\Components\Textarea::make('homeFeedAdScriptDesktop')
-                                                ->label('💻 Skrip Iklan Desktop (PC/Laptop)')
-                                                ->helperText('Saran ukuran Desktop: 728x90 atau 300x250')
-                                                ->rows(3),
-                                            Forms\Components\Textarea::make('homeFeedAdScriptMobile')
-                                                ->label('📱 Skrip Iklan Mobile (Smartphone)')
-                                                ->helperText('Saran ukuran Mobile: 300x250 atau 320x50')
-                                                ->rows(3),
-                                        ]),
+                                        Forms\Components\Textarea::make('homeFeedAdScript')
+                                            ->label('Kode Skrip HTML / JS Iklan Feed Utama')
+                                            ->placeholder('<ins class="adsbygoogle" ...></ins>')
+                                            ->rows(3)
+                                            ->columnSpanFull(),
 
                                         Forms\Components\Toggle::make('showPreFooterAd')
                                             ->label('Aktifkan Iklan Pre-Footer Banner (Sebelum Footer)')
                                             ->default(true),
-                                        Forms\Components\Grid::make(2)->schema([
-                                            Forms\Components\Textarea::make('preFooterAdScriptDesktop')
-                                                ->label('💻 Skrip Iklan Desktop (PC/Laptop)')
-                                                ->helperText('Saran ukuran Desktop: 728x90')
-                                                ->rows(3),
-                                            Forms\Components\Textarea::make('preFooterAdScriptMobile')
-                                                ->label('📱 Skrip Iklan Mobile (Smartphone)')
-                                                ->helperText('Saran ukuran Mobile: 320x50 atau 300x250')
-                                                ->rows(3),
-                                        ]),
+                                        Forms\Components\Textarea::make('preFooterAdScript')
+                                            ->label('Kode Skrip HTML / JS Iklan Pre-Footer Banner')
+                                            ->placeholder('<ins class="adsbygoogle" ...></ins>')
+                                            ->rows(3)
+                                            ->columnSpanFull(),
                                     ]),
 
                                 Forms\Components\Section::make('Iklan Halaman Detail Artikel')
-                                    ->description('Kelola posisi slot iklan di halaman detail artikel dengan pemisahan skrip untuk Desktop & Mobile')
+                                    ->description('Kelola 3 posisi slot iklan di halaman detail artikel')
                                     ->schema([
                                         Forms\Components\Toggle::make('showArticleMiddleAd')
                                             ->label('Aktifkan Iklan Tengah Artikel (In-Article Middle)')
                                             ->default(true),
-                                        Forms\Components\Grid::make(2)->schema([
-                                            Forms\Components\Textarea::make('articleMiddleAdScriptDesktop')
-                                                ->label('💻 Skrip Iklan Desktop (PC/Laptop)')
-                                                ->helperText('Saran ukuran Desktop: 728x90 atau 300x250')
-                                                ->rows(3),
-                                            Forms\Components\Textarea::make('articleMiddleAdScriptMobile')
-                                                ->label('📱 Skrip Iklan Mobile (Smartphone)')
-                                                ->helperText('Saran ukuran Mobile: 300x250 atau 320x50')
-                                                ->rows(3),
-                                        ]),
+                                        Forms\Components\Textarea::make('articleMiddleAdScript')
+                                            ->label('Kode Skrip HTML / JS Iklan Tengah Artikel')
+                                            ->rows(3)
+                                            ->columnSpanFull(),
 
                                         Forms\Components\Toggle::make('showArticleEndAd')
                                             ->label('Aktifkan Iklan Akhir Artikel (In-Article End)')
                                             ->default(true),
-                                        Forms\Components\Grid::make(2)->schema([
-                                            Forms\Components\Textarea::make('articleEndAdScriptDesktop')
-                                                ->label('💻 Skrip Iklan Desktop (PC/Laptop)')
-                                                ->helperText('Saran ukuran Desktop: 728x90 atau 300x250')
-                                                ->rows(3),
-                                            Forms\Components\Textarea::make('articleEndAdScriptMobile')
-                                                ->label('📱 Skrip Iklan Mobile (Smartphone)')
-                                                ->helperText('Saran ukuran Mobile: 300x250 atau 320x50')
-                                                ->rows(3),
-                                        ]),
+                                        Forms\Components\Textarea::make('articleEndAdScript')
+                                            ->label('Kode Skrip HTML / JS Iklan Akhir Artikel')
+                                            ->rows(3)
+                                            ->columnSpanFull(),
 
                                         Forms\Components\Toggle::make('showArticleSidebarAd')
-                                            ->label('Aktifkan Iklan Sidebar Detail Artikel (Article Detail Sidebar)')
+                                            ->label('Aktifkan Iklan Kolom Kanan Detail (Article Detail Sidebar)')
                                             ->default(true),
-                                        Forms\Components\Grid::make(2)->schema([
-                                            Forms\Components\Textarea::make('articleSidebarAdScriptDesktop')
-                                                ->label('💻 Skrip Iklan Desktop (PC/Laptop)')
-                                                ->helperText('Saran ukuran Desktop: 300x250 atau 160x600')
-                                                ->rows(3),
-                                            Forms\Components\Textarea::make('articleSidebarAdScriptMobile')
-                                                ->label('📱 Skrip Iklan Mobile (Smartphone)')
-                                                ->helperText('Saran ukuran Mobile: 300x250 atau 320x50')
-                                                ->rows(3),
-                                        ]),
+                                        Forms\Components\Textarea::make('articleSidebarAdScript')
+                                            ->label('Kode Skrip HTML / JS Iklan Sidebar Detail Artikel')
+                                            ->rows(3)
+                                            ->columnSpanFull(),
                                     ]),
 
                                 Forms\Components\Section::make('Iklan Halaman Shortener Download (/go/:code)')
@@ -460,52 +420,40 @@ class ManageSiteSettings extends Page implements Forms\Contracts\HasForms
                                         Forms\Components\Toggle::make('showShortenerTopAd')
                                             ->label('Aktifkan Iklan Atas Shortener (Top Ad)')
                                             ->default(true),
-                                        Forms\Components\Grid::make(2)->schema([
-                                            Forms\Components\Textarea::make('shortenerTopAdScriptDesktop')
-                                                ->label('💻 Skrip Desktop (728x90)')
-                                                ->rows(3),
-                                            Forms\Components\Textarea::make('shortenerTopAdScriptMobile')
-                                                ->label('📱 Skrip Mobile (320x50/300x250)')
-                                                ->rows(3),
-                                        ]),
+                                        Forms\Components\Textarea::make('shortenerTopAdScript')
+                                            ->label('Kode Skrip HTML / JS Iklan Atas Shortener')
+                                            ->rows(3)
+                                            ->columnSpanFull(),
 
                                         Forms\Components\Toggle::make('showShortenerMiddleAd')
                                             ->label('Aktifkan Iklan Tengah Shortener (Middle Ad Dalam Artikel)')
                                             ->default(true),
-                                        Forms\Components\Grid::make(2)->schema([
-                                            Forms\Components\Textarea::make('shortenerMiddleAdScriptDesktop')
-                                                ->label('💻 Skrip Desktop (728x90/300x250)')
-                                                ->rows(3),
-                                            Forms\Components\Textarea::make('shortenerMiddleAdScriptMobile')
-                                                ->label('📱 Skrip Mobile (300x250/320x50)')
-                                                ->rows(3),
-                                        ]),
+                                        Forms\Components\Textarea::make('shortenerMiddleAdScript')
+                                            ->label('Kode Skrip HTML / JS Iklan Tengah Shortener')
+                                            ->rows(3)
+                                            ->columnSpanFull(),
 
                                         Forms\Components\Toggle::make('showShortenerBottomAd')
                                             ->label('Aktifkan Iklan Bawah Shortener (Bottom Ad Sebelum Komentar)')
                                             ->default(true),
-                                        Forms\Components\Grid::make(2)->schema([
-                                            Forms\Components\Textarea::make('shortenerBottomAdScriptDesktop')
-                                                ->label('💻 Skrip Desktop (728x90/300x250)')
-                                                ->rows(3),
-                                            Forms\Components\Textarea::make('shortenerBottomAdScriptMobile')
-                                                ->label('📱 Skrip Mobile (300x250/320x50)')
-                                                ->rows(3),
-                                        ]),
+                                        Forms\Components\Textarea::make('shortenerBottomAdScript')
+                                            ->label('Kode Skrip HTML / JS Iklan Bawah Shortener')
+                                            ->rows(3)
+                                            ->columnSpanFull(),
 
                                         Forms\Components\Toggle::make('showShortenerLeftAd')
                                             ->label('Aktifkan Iklan Sisi Kiri Desktop (Left Banner / Skyscraper)')
                                             ->default(true),
-                                        Forms\Components\Textarea::make('shortenerLeftAdScriptDesktop')
-                                            ->label('💻 Skrip Desktop (160x600)')
+                                        Forms\Components\Textarea::make('shortenerLeftAdScript')
+                                            ->label('Kode Skrip HTML / JS Iklan Sisi Kiri Desktop')
                                             ->rows(3)
                                             ->columnSpanFull(),
 
                                         Forms\Components\Toggle::make('showShortenerRightAd')
                                             ->label('Aktifkan Iklan Sisi Kanan Desktop (Right Banner / Skyscraper)')
                                             ->default(true),
-                                        Forms\Components\Textarea::make('shortenerRightAdScriptDesktop')
-                                            ->label('💻 Skrip Desktop (160x600)')
+                                        Forms\Components\Textarea::make('shortenerRightAdScript')
+                                            ->label('Kode Skrip HTML / JS Iklan Sisi Kanan Desktop')
                                             ->rows(3)
                                             ->columnSpanFull(),
                                     ]),

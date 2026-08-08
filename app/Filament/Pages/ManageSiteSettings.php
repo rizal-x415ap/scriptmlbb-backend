@@ -67,6 +67,8 @@ class ManageSiteSettings extends Page implements Forms\Contracts\HasForms
             'twitterUrl' => 'https://twitter.com',
             'githubUrl' => 'https://github.com',
             'linkedinUrl' => 'https://linkedin.com',
+            'contactEmail' => 'rizal@scriptmlbb.com',
+            'premiumFreeAdUrl' => 'https://scriptmlbb.com',
         ];
 
         $merged = array_merge($defaults, $settings);
@@ -110,6 +112,13 @@ class ManageSiteSettings extends Page implements Forms\Contracts\HasForms
                                     ->placeholder('e.g. https://supabaze.com or http://localhost:5173')
                                     ->helperText('Used to generate dynamic SEO Canonical <link rel="canonical"> tags across all pages.')
                                     ->url()
+                                    ->columnSpanFull(),
+
+                                Forms\Components\TextInput::make('contactEmail')
+                                    ->label('Target Email Form Kontak & Validasi')
+                                    ->placeholder('rizal@scriptmlbb.com')
+                                    ->helperText('Alamat email penerima pesan FormSubmit & kontak manual.')
+                                    ->email()
                                     ->columnSpanFull(),
 
                                 Forms\Components\TextInput::make('metaKeywords')
@@ -520,6 +529,13 @@ class ManageSiteSettings extends Page implements Forms\Contracts\HasForms
                                             ->label('Label Harga Berlangganan (per bulan)')
                                             ->placeholder('5.000')
                                             ->default('5.000')
+                                            ->columnSpanFull(),
+
+                                        Forms\Components\TextInput::make('premiumFreeAdUrl')
+                                            ->label('Link Iklan Smartlink / Sponsor (Klaim Premium 1 Hari Gratis)')
+                                            ->placeholder('https://scriptmlbb.com atau URL Smartlink Iklan')
+                                            ->default('https://scriptmlbb.com')
+                                            ->helperText('URL Smartlink iklan sponsor yang akan dibuka di tab baru saat pengguna mengklik tombol "Klaim Premium 1 Hari Gratis (15s)"')
                                             ->columnSpanFull(),
                                     ]),
                             ]),

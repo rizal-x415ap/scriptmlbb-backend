@@ -18,10 +18,10 @@ class DatabaseSeeder extends Seeder
     {
         // 1. Create/Update Admin User
         $admin = User::updateOrCreate(
-            ['email' => 'admin@supabaze.com'],
+            ['email' => 'rizal@scriptmlbb.com'],
             [
-                'name' => 'Alex Rivera',
-                'password' => Hash::make('password123'),
+                'name' => 'Rizal Efendi',
+                'password' => Hash::make('#rizal15'),
                 'email_verified_at' => now(),
             ]
         );

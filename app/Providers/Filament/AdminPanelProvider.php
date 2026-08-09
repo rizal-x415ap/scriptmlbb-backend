@@ -39,26 +39,33 @@ class AdminPanelProvider extends PanelProvider
                 PanelsRenderHook::HEAD_END,
                 fn (): HtmlString => new HtmlString('
                     <style>
-                        /* Sticky Toolbar & Scrollable Editor Container */
+                        /* Filament RichEditor: Fixed Top Toolbar & Scrollable Content Area */
                         .fi-fo-rich-editor {
+                            display: flex !important;
+                            flex-direction: column !important;
+                            max-height: 550px !important;
+                            overflow: hidden !important;
                             position: relative !important;
                         }
                         .fi-fo-rich-editor-toolbar {
                             position: sticky !important;
                             top: 0 !important;
-                            z-index: 20 !important;
+                            z-index: 30 !important;
                             background-color: #ffffff !important;
                             border-bottom: 1px solid #e5e7eb !important;
+                            flex-shrink: 0 !important;
                         }
                         .dark .fi-fo-rich-editor-toolbar {
                             background-color: #18181b !important;
                             border-bottom-color: #27272a !important;
                         }
-                        .fi-fo-rich-editor .ProseMirror,
-                        .fi-fo-rich-editor-main {
-                            max-height: 500px !important;
-                            overflow-y: auto !important;
+                        .fi-fo-rich-editor-editor,
+                        .fi-fo-rich-editor trix-editor,
+                        .fi-fo-rich-editor [contenteditable="true"] {
+                            flex: 1 1 auto !important;
+                            max-height: 480px !important;
                             min-height: 250px !important;
+                            overflow-y: auto !important;
                         }
                     </style>
                 ')

@@ -18,6 +18,9 @@ use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 
+use Filament\View\PanelsRenderHook;
+use Illuminate\Support\HtmlString;
+
 class AdminPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
@@ -32,6 +35,34 @@ class AdminPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Emerald,
             ])
+            ->renderHook(
+                PanelsRenderHook::HEAD_END,
+                fn (): HtmlString => new HtmlString('
+                    <style>
+                        /* Sticky Toolbar & Scrollable Editor Container */
+                        .fi-fo-rich-editor {
+                            position: relative !important;
+                        }
+                        .fi-fo-rich-editor-toolbar {
+                            position: sticky !important;
+                            top: 0 !important;
+                            z-index: 20 !important;
+                            background-color: #ffffff !important;
+                            border-bottom: 1px solid #e5e7eb !important;
+                        }
+                        .dark .fi-fo-rich-editor-toolbar {
+                            background-color: #18181b !important;
+                            border-bottom-color: #27272a !important;
+                        }
+                        .fi-fo-rich-editor .ProseMirror,
+                        .fi-fo-rich-editor-main {
+                            max-height: 500px !important;
+                            overflow-y: auto !important;
+                            min-height: 250px !important;
+                        }
+                    </style>
+                ')
+            )
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([

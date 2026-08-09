@@ -5,10 +5,16 @@ namespace App\Filament\Resources\PageResource\Pages;
 use App\Filament\Resources\PageResource;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
+use Filament\Support\Enums\Alignment;
 
 class CreatePage extends CreateRecord
 {
     protected static string $resource = PageResource::class;
+
+    public function getFormActionsAlignment(): Alignment | string
+    {
+        return Alignment::End;
+    }
 
     protected function getCreatedNotification(): ?Notification
     {

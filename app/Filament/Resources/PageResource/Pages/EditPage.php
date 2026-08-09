@@ -6,10 +6,16 @@ use App\Filament\Resources\PageResource;
 use Filament\Actions;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
+use Filament\Support\Enums\Alignment;
 
 class EditPage extends EditRecord
 {
     protected static string $resource = PageResource::class;
+
+    public function getFormActionsAlignment(): Alignment | string
+    {
+        return Alignment::End;
+    }
 
     protected function getHeaderActions(): array
     {

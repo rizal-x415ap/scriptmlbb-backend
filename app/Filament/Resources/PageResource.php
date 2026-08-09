@@ -50,14 +50,17 @@ class PageResource extends Resource
                     ])->columnSpan(2),
 
                     Forms\Components\Group::make()->schema([
-                        Forms\Components\Select::make('status')
-                            ->label('Status Publikasi')
-                            ->options([
-                                'draft' => 'Draft (Disembunyikan)',
-                                'published' => 'Published (Tampil Publik)',
-                            ])
-                            ->default('published')
-                            ->required(),
+                        Forms\Components\Section::make('📌 Status & Publikasi')
+                            ->schema([
+                                Forms\Components\Select::make('status')
+                                    ->label('Status Publikasi')
+                                    ->options([
+                                        'draft' => 'Draft (Disembunyikan)',
+                                        'published' => 'Published (Tampil Publik)',
+                                    ])
+                                    ->default('published')
+                                    ->required(),
+                            ]),
                     ])->columnSpan(1),
                 ]),
             ]);

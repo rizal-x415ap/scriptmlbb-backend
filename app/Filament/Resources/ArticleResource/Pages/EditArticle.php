@@ -6,10 +6,16 @@ use App\Filament\Resources\ArticleResource;
 use Filament\Actions;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
+use Filament\Support\Enums\Alignment;
 
 class EditArticle extends EditRecord
 {
     protected static string $resource = ArticleResource::class;
+
+    public function getFormActionsAlignment(): Alignment | string
+    {
+        return Alignment::End;
+    }
 
     protected function getHeaderActions(): array
     {

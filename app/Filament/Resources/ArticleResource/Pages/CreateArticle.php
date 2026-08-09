@@ -5,10 +5,16 @@ namespace App\Filament\Resources\ArticleResource\Pages;
 use App\Filament\Resources\ArticleResource;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
+use Filament\Support\Enums\Alignment;
 
 class CreateArticle extends CreateRecord
 {
     protected static string $resource = ArticleResource::class;
+
+    public function getFormActionsAlignment(): Alignment | string
+    {
+        return Alignment::End;
+    }
 
     protected function getCreatedNotification(): ?Notification
     {

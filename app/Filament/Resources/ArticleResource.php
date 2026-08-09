@@ -126,39 +126,42 @@ class ArticleResource extends Resource
                     ])->columnSpan(2),
 
                     Forms\Components\Group::make()->schema([
-                        Forms\Components\Select::make('template')
-                            ->label('Pilihan Template Postingan')
-                            ->options([
-                                'standard' => 'Standard Editorial Article (Default)',
-                                'playstore' => 'Google Play Store App Detail Page (App / Mod Script)',
-                            ])
-                            ->default('standard')
-                            ->live()
-                            ->required(),
-                        Forms\Components\Select::make('category_id')
-                            ->relationship('category', 'name')
-                            ->required(),
-                        Forms\Components\Select::make('author_id')
-                            ->relationship('author', 'name')
-                            ->default(auth()->id()),
-                        Forms\Components\TextInput::make('cover_image')
-                            ->label('Thumbnail Utama Artikel (Ratio 16:9 / Header Cover)')
-                            ->placeholder('https://images.unsplash.com/photo-...'),
-                        Forms\Components\TextInput::make('read_time')
-                            ->default('5 min read'),
-                        Forms\Components\Select::make('status')
-                            ->options([
-                                'draft' => 'Draft',
-                                'published' => 'Published',
-                                'archived' => 'Archived',
-                            ])
-                            ->default('published')
-                            ->required(),
-                        Forms\Components\Toggle::make('is_featured')
-                            ->label('Featured Article'),
-                        Forms\Components\DateTimePicker::make('published_at')
-                            ->label('Tanggal Update / Publish')
-                            ->default(now()),
+                        Forms\Components\Section::make('📌 Pengaturan Artikel & Publikasi')
+                            ->schema([
+                                Forms\Components\Select::make('template')
+                                    ->label('Pilihan Template Postingan')
+                                    ->options([
+                                        'standard' => 'Standard Editorial Article (Default)',
+                                        'playstore' => 'Google Play Store App Detail Page (App / Mod Script)',
+                                    ])
+                                    ->default('standard')
+                                    ->live()
+                                    ->required(),
+                                Forms\Components\Select::make('category_id')
+                                    ->relationship('category', 'name')
+                                    ->required(),
+                                Forms\Components\Select::make('author_id')
+                                    ->relationship('author', 'name')
+                                    ->default(auth()->id()),
+                                Forms\Components\TextInput::make('cover_image')
+                                    ->label('Thumbnail Utama Artikel (Ratio 16:9 / Header Cover)')
+                                    ->placeholder('https://images.unsplash.com/photo-...'),
+                                Forms\Components\TextInput::make('read_time')
+                                    ->default('5 min read'),
+                                Forms\Components\Select::make('status')
+                                    ->options([
+                                        'draft' => 'Draft',
+                                        'published' => 'Published',
+                                        'archived' => 'Archived',
+                                    ])
+                                    ->default('published')
+                                    ->required(),
+                                Forms\Components\Toggle::make('is_featured')
+                                    ->label('Featured Article'),
+                                Forms\Components\DateTimePicker::make('published_at')
+                                    ->label('Tanggal Update / Publish')
+                                    ->default(now()),
+                            ]),
                     ])->columnSpan(1),
                 ]),
             ]);

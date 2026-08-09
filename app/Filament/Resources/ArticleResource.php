@@ -106,15 +106,25 @@ class ArticleResource extends Resource
                                     ])
                                     ->columns(2)
                                     ->columnSpanFull()
-                                    ->defaultItems(5)
+                                    ->defaultItems(2)
                                     ->default([
                                         ['name' => 'Replace', 'url' => ''],
                                         ['name' => 'Replace', 'url' => ''],
-                                        ['name' => 'Replace', 'url' => ''],
-                                        ['name' => 'Replace', 'url' => ''],
-                                        ['name' => 'Replace', 'url' => ''],
                                     ])
-                                    ->createItemButtonLabel('Tambah Link Download Baru'),
+                                    ->headerActions([
+                                        Forms\Components\Actions\Action::make('add_5_links')
+                                            ->label('+ Tambah 5 Link Sekaligus')
+                                            ->button()
+                                            ->color('info')
+                                            ->action(function (Forms\Components\Repeater $component, $state, $set) {
+                                                $items = is_array($state) ? $state : [];
+                                                for ($i = 0; $i < 5; $i++) {
+                                                    $items[] = ['name' => 'Replace', 'url' => ''];
+                                                }
+                                                $set($component->getStatePath(), $items);
+                                            }),
+                                    ])
+                                    ->createItemButtonLabel('Tambah 1 Link Single'),
                             ])
                             ->collapsible(),
                     ])->columnSpan(2),

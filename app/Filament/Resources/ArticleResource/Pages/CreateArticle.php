@@ -11,9 +11,9 @@ class CreateArticle extends CreateRecord
 {
     protected static string $resource = ArticleResource::class;
 
-    public function getFormActionsAlignment(): Alignment | string
+    protected function getFormActions(): array
     {
-        return Alignment::End;
+        return [];
     }
 
     protected function getCreatedNotification(): ?Notification

@@ -161,6 +161,20 @@ class ArticleResource extends Resource
                                 Forms\Components\DateTimePicker::make('published_at')
                                     ->label('Tanggal Update / Publish')
                                     ->default(now()),
+                                Forms\Components\Actions::make([
+                                    Forms\Components\Actions\Action::make('save')
+                                        ->label(fn ($record) => $record ? '💾 Simpan Perubahan Artikel' : '🚀 Publish Artikel Baru')
+                                        ->button()
+                                        ->color('primary')
+                                        ->extraAttributes(['class' => 'w-full justify-center'])
+                                        ->action(function ($livewire) {
+                                            if (method_exists($livewire, 'save')) {
+                                                $livewire->save();
+                                            } elseif (method_exists($livewire, 'create')) {
+                                                $livewire->create();
+                                            }
+                                        }),
+                                ])->fullWidth(),
                             ]),
                     ])->columnSpan(1),
                 ]),

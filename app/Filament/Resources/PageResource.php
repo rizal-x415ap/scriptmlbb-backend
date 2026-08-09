@@ -60,6 +60,20 @@ class PageResource extends Resource
                                     ])
                                     ->default('published')
                                     ->required(),
+                                Forms\Components\Actions::make([
+                                    Forms\Components\Actions\Action::make('save')
+                                        ->label(fn ($record) => $record ? '💾 Simpan Perubahan Halaman' : '🚀 Publish Halaman Baru')
+                                        ->button()
+                                        ->color('primary')
+                                        ->extraAttributes(['class' => 'w-full justify-center'])
+                                        ->action(function ($livewire) {
+                                            if (method_exists($livewire, 'save')) {
+                                                $livewire->save();
+                                            } elseif (method_exists($livewire, 'create')) {
+                                                $livewire->create();
+                                            }
+                                        }),
+                                ])->fullWidth(),
                             ]),
                     ])->columnSpan(1),
                 ]),

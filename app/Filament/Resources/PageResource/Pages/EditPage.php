@@ -12,9 +12,9 @@ class EditPage extends EditRecord
 {
     protected static string $resource = PageResource::class;
 
-    public function getFormActionsAlignment(): Alignment | string
+    protected function getFormActions(): array
     {
-        return Alignment::End;
+        return [];
     }
 
     protected function getHeaderActions(): array

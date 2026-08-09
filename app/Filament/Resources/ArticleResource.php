@@ -97,6 +97,7 @@ class ArticleResource extends Resource
                                         Forms\Components\TextInput::make('name')
                                             ->label('Nama Server / File')
                                             ->placeholder('e.g. Link Utama (MediaFire)')
+                                            ->default('Replace')
                                             ->required(),
                                         Forms\Components\TextInput::make('url')
                                             ->label('URL Download')

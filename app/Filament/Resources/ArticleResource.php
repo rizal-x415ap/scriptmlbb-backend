@@ -131,12 +131,25 @@ class ArticleResource extends Resource
                                 Forms\Components\Select::make('template')
                                     ->label('Pilihan Template Postingan')
                                     ->options([
-                                        'standard' => 'Standard Editorial Article (Default)',
+                                        'standard'  => 'Standard Editorial Article (Default)',
                                         'playstore' => 'Google Play Store App Detail Page (App / Mod Script)',
                                     ])
                                     ->default('standard')
                                     ->live()
-                                    ->required(),
+                                    ->required()
+                                    ->afterStateUpdated(function ($state, Forms\Set $set, $record) {
+                                        // Auto-fill app template defaults when switching to playstore/app
+                                        if (in_array($state, ['playstore', 'app']) && ! $record) {
+                                            $set('app_developer', 'Script MLBB');
+                                            $set('app_version', 'Season 41');
+                                            $set('app_size', '10.5 MB');
+                                            $set('app_features', ['Full Effect & Voice', 'Full Backround', 'Work All Mode', 'Work All Grafik', 'No Banned & Bug']);
+                                            $set('download_links', [
+                                                ['name' => 'Replace', 'url' => ''],
+                                                ['name' => 'Replace', 'url' => ''],
+                                            ]);
+                                        }
+                                    }),
                                 Forms\Components\Select::make('category_id')
                                     ->relationship('category', 'name')
                                     ->required(),

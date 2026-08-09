@@ -18,9 +18,6 @@ use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 
-use Filament\View\PanelsRenderHook;
-use Illuminate\Support\HtmlString;
-
 class AdminPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
@@ -35,41 +32,6 @@ class AdminPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Emerald,
             ])
-            ->renderHook(
-                PanelsRenderHook::HEAD_END,
-                fn (): HtmlString => new HtmlString('
-                    <style>
-                        /* Filament RichEditor: Fixed Top Toolbar & Scrollable Content Area */
-                        .fi-fo-rich-editor {
-                            display: flex !important;
-                            flex-direction: column !important;
-                            max-height: 550px !important;
-                            overflow: hidden !important;
-                            position: relative !important;
-                        }
-                        .fi-fo-rich-editor-toolbar {
-                            position: sticky !important;
-                            top: 0 !important;
-                            z-index: 30 !important;
-                            background-color: #ffffff !important;
-                            border-bottom: 1px solid #e5e7eb !important;
-                            flex-shrink: 0 !important;
-                        }
-                        .dark .fi-fo-rich-editor-toolbar {
-                            background-color: #18181b !important;
-                            border-bottom-color: #27272a !important;
-                        }
-                        .fi-fo-rich-editor-editor,
-                        .fi-fo-rich-editor trix-editor,
-                        .fi-fo-rich-editor [contenteditable="true"] {
-                            flex: 1 1 auto !important;
-                            max-height: 480px !important;
-                            min-height: 250px !important;
-                            overflow-y: auto !important;
-                        }
-                    </style>
-                ')
-            )
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([

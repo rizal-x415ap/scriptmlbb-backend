@@ -72,20 +72,23 @@ class ArticleResource extends Resource
 
                                 Forms\Components\TextInput::make('app_developer')
                                     ->label('Nama Pengembang / Developer')
-                                    ->placeholder('e.g. Moonton / Script MLBB Official'),
+                                    ->placeholder('e.g. Moonton / Script MLBB Official')
+                                    ->default('Script MLBB'),
 
                                 Forms\Components\TextInput::make('app_version')
                                     ->label('Versi Aplikasi / Script')
-                                    ->placeholder('e.g. v1.8.94 (Season 35)'),
+                                    ->placeholder('e.g. v1.8.94 (Season 35)')
+                                    ->default('Season 41'),
 
                                 Forms\Components\TextInput::make('app_size')
                                     ->label('Ukuran File Download')
-                                    ->placeholder('e.g. 45.2 MB'),
+                                    ->placeholder('e.g. 15.2 MB')
+                                    ->default('10.5 MB'),
 
                                 Forms\Components\TagsInput::make('app_features')
                                     ->label('Tag / Badge Fitur Keunggulan Script (Features Badges)')
                                     ->placeholder('Ketik fitur (cth: Anti-Banned 100%) lalu tekan Enter')
-                                    ->default(['Anti-Banned 100%', 'Update Patch Season 35', 'Full Effect Recall Custom', 'Tanpa Root Device'])
+                                    ->default(['Full Effect & Voice', 'Full Backround', 'Work All Mode', 'Work All Grafik', 'No Banned & Bug'])
                                     ->columnSpanFull(),
 
                                 Forms\Components\Repeater::make('download_links')

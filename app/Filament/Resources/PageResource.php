@@ -62,10 +62,9 @@ class PageResource extends Resource
                                     ->required(),
                                 Forms\Components\Actions::make([
                                     Forms\Components\Actions\Action::make('save')
-                                        ->label(fn ($record) => $record ? '💾 Simpan Perubahan Halaman' : '🚀 Publish Halaman Baru')
+                                        ->label(fn ($record) => $record ? 'Simpan Perubahan' : 'Buat Halaman')
                                         ->button()
                                         ->color('primary')
-                                        ->extraAttributes(['class' => 'w-full justify-center'])
                                         ->action(function ($livewire) {
                                             if (method_exists($livewire, 'save')) {
                                                 $livewire->save();
@@ -73,7 +72,22 @@ class PageResource extends Resource
                                                 $livewire->create();
                                             }
                                         }),
-                                ])->fullWidth(),
+                                    Forms\Components\Actions\Action::make('createAnother')
+                                        ->label('Buat & Tambah Lainnya')
+                                        ->button()
+                                        ->color('gray')
+                                        ->visible(fn ($record) => ! $record)
+                                        ->action(function ($livewire) {
+                                            if (method_exists($livewire, 'create')) {
+                                                $livewire->create(another: true);
+                                            }
+                                        }),
+                                    Forms\Components\Actions\Action::make('cancel')
+                                        ->label('Batal')
+                                        ->button()
+                                        ->color('gray')
+                                        ->url(fn () => static::getUrl('index')),
+                                ])->columnSpanFull(),
                             ]),
                     ])->columnSpan(1),
                 ]),

@@ -13,8 +13,10 @@ class CommentController extends Controller
 {
     public function store(StoreCommentRequest $request, string $articleIdOrSlug): JsonResponse
     {
-        $article = Article::where('id', $articleIdOrSlug)
-            ->orWhere('slug', $articleIdOrSlug)
+        $article = Article::published()
+            ->where(function ($q) use ($articleIdOrSlug) {
+                $q->where('id', $articleIdOrSlug)->orWhere('slug', $articleIdOrSlug);
+            })
             ->firstOrFail();
 
         $comment = $article->comments()->create([

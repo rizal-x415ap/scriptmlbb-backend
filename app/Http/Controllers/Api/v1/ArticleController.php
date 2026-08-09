@@ -66,6 +66,7 @@ class ArticleController extends Controller
             $article = Article::with(['category', 'author', 'tags', 'shortLinks', 'comments' => function ($q) {
                 $q->whereNull('parent_id')->approved()->with('replies');
             }])
+            ->published()
             ->where(function ($q) use ($idOrSlug) {
                 if (is_numeric($idOrSlug)) {
                     $q->where('id', (int)$idOrSlug)->orWhere('slug', $idOrSlug);
@@ -96,7 +97,11 @@ class ArticleController extends Controller
 
     public function like(string $idOrSlug): JsonResponse
     {
-        $article = Article::where('id', $idOrSlug)->orWhere('slug', $idOrSlug)->firstOrFail();
+        $article = Article::published()
+            ->where(function ($q) use ($idOrSlug) {
+                $q->where('id', $idOrSlug)->orWhere('slug', $idOrSlug);
+            })
+            ->firstOrFail();
         $article->increment('likes_count');
 
         return response()->json([

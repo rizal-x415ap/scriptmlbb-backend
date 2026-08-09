@@ -106,6 +106,14 @@ class ArticleResource extends Resource
                                     ])
                                     ->columns(2)
                                     ->columnSpanFull()
+                                    ->defaultItems(5)
+                                    ->default([
+                                        ['name' => 'Replace', 'url' => ''],
+                                        ['name' => 'Replace', 'url' => ''],
+                                        ['name' => 'Replace', 'url' => ''],
+                                        ['name' => 'Replace', 'url' => ''],
+                                        ['name' => 'Replace', 'url' => ''],
+                                    ])
                                     ->createItemButtonLabel('Tambah Link Download Baru'),
                             ])
                             ->collapsible(),

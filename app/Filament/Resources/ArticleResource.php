@@ -37,12 +37,6 @@ class ArticleResource extends Resource
                             ->rows(3),
                         Forms\Components\RichEditor::make('content')
                             ->required()
-                            ->extraInputAttributes([
-                                'style' => 'min-height: 450px; max-height: 600px; overflow-y: auto;',
-                            ])
-                            ->extraAttributes([
-                                'class' => '[&_.fi-fo-rich-editor-main]:max-h-[600px] [&_.fi-fo-rich-editor-main]:overflow-y-auto [&_.ProseMirror]:min-h-[450px] [&_.ProseMirror]:max-h-[550px] [&_.ProseMirror]:overflow-y-auto',
-                            ])
                             ->toolbarButtons([
                                 'blockquote',
                                 'bold',

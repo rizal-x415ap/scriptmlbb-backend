@@ -63,6 +63,20 @@ class Article extends Model
             }
         });
 
+        static::saving(function ($article) {
+            if ($article->template === 'standard' || empty($article->template)) {
+                $article->template = 'standard';
+                $article->app_developer = null;
+                $article->app_version = null;
+                $article->app_size = null;
+                $article->app_download_url = null;
+                $article->app_poster_35 = null;
+                $article->download_links = null;
+                $article->app_screenshots = null;
+                $article->app_features = null;
+            }
+        });
+
         static::saved(function () {
             \Illuminate\Support\Facades\Cache::forget('api_home_feed_data');
         });

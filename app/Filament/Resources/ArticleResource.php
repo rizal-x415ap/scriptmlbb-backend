@@ -58,16 +58,8 @@ class ArticleResource extends Resource
                             ->columnSpanFull(),
                         Forms\Components\Section::make('📱 Play Store & Script Skin Details')
                             ->description('Atur detail aplikasi/script skin untuk postingan bertipe Play Store Template.')
+                            ->visible(fn (Forms\Get $get) => in_array($get('template'), ['playstore', 'app']))
                             ->schema([
-                                Forms\Components\Select::make('template')
-                                    ->label('Pilihan Template Tampilan Postingan')
-                                    ->options([
-                                        'standard' => 'Standard Editorial Article (Default)',
-                                        'playstore' => 'Google Play Store App Detail Page (App / Mod Script)',
-                                    ])
-                                    ->default('playstore')
-                                    ->columnSpanFull(),
-
                                 Forms\Components\TextInput::make('app_poster_35')
                                     ->label('Poster Detail Download (Rasio 3:5)')
                                     ->placeholder('https://images.unsplash.com/photo-...')
@@ -134,6 +126,15 @@ class ArticleResource extends Resource
                     ])->columnSpan(2),
 
                     Forms\Components\Group::make()->schema([
+                        Forms\Components\Select::make('template')
+                            ->label('Pilihan Template Postingan')
+                            ->options([
+                                'standard' => 'Standard Editorial Article (Default)',
+                                'playstore' => 'Google Play Store App Detail Page (App / Mod Script)',
+                            ])
+                            ->default('standard')
+                            ->live()
+                            ->required(),
                         Forms\Components\Select::make('category_id')
                             ->relationship('category', 'name')
                             ->required(),

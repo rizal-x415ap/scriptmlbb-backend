@@ -111,20 +111,21 @@ class ArticleResource extends Resource
                                         ['name' => 'Replace', 'url' => ''],
                                         ['name' => 'Replace', 'url' => ''],
                                     ])
-                                    ->headerActions([
-                                        Forms\Components\Actions\Action::make('add_5_links')
-                                            ->label('+ Tambah 5 Link Sekaligus')
-                                            ->button()
-                                            ->color('info')
-                                            ->action(function (Forms\Components\Repeater $component, $state, $set) {
-                                                $items = is_array($state) ? $state : [];
-                                                for ($i = 0; $i < 5; $i++) {
-                                                    $items[] = ['name' => 'Replace', 'url' => ''];
-                                                }
-                                                $set($component->getStatePath(), $items);
-                                            }),
-                                    ])
-                                    ->createItemButtonLabel('Tambah 1 Link Single'),
+                                    ->addAction(fn (Forms\Components\Actions\Action $action) => $action->action(function (Forms\Components\Repeater $component): void {
+                                        $items = $component->getState() ?? [];
+                                        for ($i = 0; $i < 5; $i++) {
+                                            $newUuid = $component->generateUuid();
+                                            if ($newUuid) {
+                                                $items[$newUuid] = ['name' => 'Replace', 'url' => ''];
+                                            } else {
+                                                $items[] = ['name' => 'Replace', 'url' => ''];
+                                            }
+                                        }
+                                        $component->state($items);
+                                        $component->collapsed(false, shouldMakeComponentCollapsible: false);
+                                        $component->callAfterStateUpdated();
+                                    }))
+                                    ->createItemButtonLabel('Tambah 5 Link Download Baru'),
                             ])
                             ->collapsible(),
                     ])->columnSpan(2),

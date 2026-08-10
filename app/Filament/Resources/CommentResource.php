@@ -72,11 +72,15 @@ class CommentResource extends Resource
                         $cleanText = strip_tags($data['reply_content']);
                         $cleanText = preg_replace('/https?:\/\/\S+/i', '', $cleanText);
 
+                        $admin = auth()->user();
+                        $adminName = $admin?->name ?: 'Admin (Author)';
+                        $adminEmail = $admin?->email ?: 'admin@supabaze.com';
+
                         Comment::create([
                             'article_id' => $record->article_id,
                             'parent_id' => $record->id,
-                            'author_name' => 'Admin (Author)',
-                            'author_email' => 'admin@supabaze.com',
+                            'author_name' => $adminName,
+                            'author_email' => $adminEmail,
                             'content' => $cleanText,
                             'status' => 'approved',
                             'is_author_reply' => true,

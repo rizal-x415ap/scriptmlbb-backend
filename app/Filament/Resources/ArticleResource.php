@@ -86,41 +86,14 @@ class ArticleResource extends Resource
                                     ->default(['Full Effect & Voice', 'Full Backround', 'Work All Mode', 'Work All Grafik', 'No Banned & Bug'])
                                     ->columnSpanFull(),
 
-                                Forms\Components\Repeater::make('download_links')
-                                    ->label('Link Download File (Input Masal / Multi-Server)')
-                                    ->schema([
-                                        Forms\Components\TextInput::make('name')
-                                            ->label('Nama Server / File')
-                                            ->placeholder('e.g. Link Utama (MediaFire)')
-                                            ->default('Replace')
-                                            ->required(),
-                                        Forms\Components\TextInput::make('url')
-                                            ->label('URL Download')
-                                            ->placeholder('https://www.mediafire.com/file/...')
-                                            ->required(),
-                                    ])
-                                    ->columns(2)
+                                Forms\Components\Textarea::make('download_links')
+                                    ->label('Link Download File (List: nama file, url)')
+                                    ->helperText('Masukkan setiap link download dalam satu baris: nama file, url. Gunakan baris baru untuk data baru.')
+                                    ->rows(6)
                                     ->columnSpanFull()
-                                    ->defaultItems(2)
-                                    ->default([
-                                        ['name' => 'Replace', 'url' => ''],
-                                        ['name' => 'Replace', 'url' => ''],
-                                    ])
-                                    ->addAction(fn (Forms\Components\Actions\Action $action) => $action->action(function (Forms\Components\Repeater $component): void {
-                                        $items = $component->getState() ?? [];
-                                        for ($i = 0; $i < 5; $i++) {
-                                            $newUuid = $component->generateUuid();
-                                            if ($newUuid) {
-                                                $items[$newUuid] = ['name' => 'Replace', 'url' => ''];
-                                            } else {
-                                                $items[] = ['name' => 'Replace', 'url' => ''];
-                                            }
-                                        }
-                                        $component->state($items);
-                                        $component->collapsed(false, shouldMakeComponentCollapsible: false);
-                                        $component->callAfterStateUpdated();
-                                    }))
-                                    ->createItemButtonLabel('Tambah 5 Link Download Baru'),
+                                    ->reactive()
+                                    ->dehydrateStateUsing(fn (?string $state) => self::parseDownloadLinksText($state))
+                                    ->afterStateHydrated(fn ($state, Forms\Set $set) => $set('download_links', self::prepareDownloadLinksText($state))),
                             ])
                             ->collapsible(),
                     ])->columnSpan(2),
@@ -251,5 +224,67 @@ class ArticleResource extends Resource
             'create' => Pages\CreateArticle::route('/create'),
             'edit' => Pages\EditArticle::route('/{record}/edit'),
         ];
+    }
+
+    private static function prepareDownloadLinksText($state): ?string
+    {
+        if (empty($state)) {
+            return null;
+        }
+
+        if (is_string($state)) {
+            return $state;
+        }
+
+        if (!is_array($state)) {
+            return null;
+        }
+
+        $lines = [];
+        foreach ($state as $item) {
+            if (!is_array($item)) {
+                continue;
+            }
+
+            $name = trim($item['name'] ?? '');
+            $url = trim($item['url'] ?? '');
+
+            if ($name === '' && $url === '') {
+                continue;
+            }
+
+            $lines[] = trim($name . ', ' . $url, " ,\t\n\r");
+        }
+
+        return empty($lines) ? null : implode("\n", $lines);
+    }
+
+    private static function parseDownloadLinksText(?string $text): ?array
+    {
+        if ($text === null) {
+            return null;
+        }
+
+        $lines = preg_split('/\r?\n/', $text, -1, PREG_SPLIT_NO_EMPTY);
+        $links = [];
+
+        foreach ($lines as $line) {
+            $parts = array_map('trim', explode(',', $line, 2));
+            if (count($parts) < 2) {
+                continue;
+            }
+
+            [$name, $url] = $parts;
+            if ($name === '' || $url === '') {
+                continue;
+            }
+
+            $links[] = [
+                'name' => $name,
+                'url' => $url,
+            ];
+        }
+
+        return empty($links) ? null : $links;
     }
 }

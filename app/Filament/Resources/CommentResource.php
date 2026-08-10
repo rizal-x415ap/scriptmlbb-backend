@@ -73,13 +73,14 @@ class CommentResource extends Resource
                         $cleanText = preg_replace('/https?:\/\/\S+/i', '', $cleanText);
 
                         $admin = auth()->user();
-                        $adminName = $admin?->name ?: 'Admin (Author)';
+                        $adminName = $admin?->name ?: 'Admin';
+                        $authorName = str_ends_with($adminName, ' (Author)') ? $adminName : sprintf('%s (Author)', $adminName);
                         $adminEmail = $admin?->email ?: 'admin@supabaze.com';
 
                         Comment::create([
                             'article_id' => $record->article_id,
                             'parent_id' => $record->id,
-                            'author_name' => $adminName,
+                            'author_name' => $authorName,
                             'author_email' => $adminEmail,
                             'content' => $cleanText,
                             'status' => 'approved',

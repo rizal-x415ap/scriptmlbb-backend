@@ -41,7 +41,7 @@ class ArticleResource extends Resource
                                 'class' => '[&_.fi-fo-rich-editor-header]:!static [&_.fi-fo-rich-editor-header]:!z-0 [&_header]:!static [&_header]:!z-0',
                             ])
                             ->extraInputAttributes([
-                                'class' => 'max-h-[32rem] overflow-y-auto',
+                                'style' => 'max-height:32rem; overflow-y:auto;'
                             ])
                             ->toolbarButtons([
                                 'blockquote',

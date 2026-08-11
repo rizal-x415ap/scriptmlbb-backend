@@ -46,6 +46,9 @@ class PageResource extends Resource
                         Forms\Components\RichEditor::make('content')
                             ->label('Isi Konten Halaman')
                             ->required()
+                            ->extraInputAttributes([
+                                'style' => 'max-height:32rem; overflow-y:auto;',
+                            ])
                             ->columnSpanFull(),
                     ])->columnSpan(2),
 

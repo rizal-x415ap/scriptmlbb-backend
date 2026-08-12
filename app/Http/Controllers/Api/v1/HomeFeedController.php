@@ -35,26 +35,9 @@ class HomeFeedController extends Controller
                 ->latest('published_at')
                 ->paginate(5, ['*'], 'page', $page);
 
-            $topics = [];
-            if ($page === 1) {
-                $topics = \App\Models\Category::withCount(['articles' => function ($q) {
-                    $q->published();
-                }])
-                ->orderByDesc('articles_count')
-                ->get()
-                ->map(function ($cat) {
-                    return [
-                        'name' => $cat->name,
-                        'slug' => $cat->slug,
-                        'count' => $cat->articles_count,
-                    ];
-                });
-            }
-
             return [
                 'featured' => $featured,
                 'feed' => $feed->items(),
-                'topics' => $topics,
                 'pagination' => [
                     'current_page' => $feed->currentPage(),
                     'last_page' => $feed->lastPage(),

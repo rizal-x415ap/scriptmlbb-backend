@@ -36,6 +36,14 @@ Route::prefix('v1')
         Route::get('/home-feed', HomeFeedController::class)
             ->middleware('throttle:60,1');
 
+        // Topics List (Public, throttle 60/min)
+        Route::get('/topics', [ArticleController::class, 'topics'])
+            ->middleware('throttle:60,1');
+
+        // Popular Articles (Public, throttle 60/min)
+        Route::get('/articles/popular', [ArticleController::class, 'popular'])
+            ->middleware('throttle:60,1');
+
         // Articles Feed & Search
         Route::get('/articles', [ArticleController::class, 'index'])
             ->middleware('throttle:30,1');

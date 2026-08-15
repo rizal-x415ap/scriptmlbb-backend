@@ -69,6 +69,8 @@ class ManageSiteSettings extends Page implements Forms\Contracts\HasForms
             'linkedinUrl' => 'https://linkedin.com',
             'contactEmail' => 'rizal@scriptmlbb.com',
             'premiumFreeAdUrl' => 'https://scriptmlbb.com',
+            'premiumFreeAdMode' => 'direct_link',
+            'premiumFreeAdScript' => '',
         ];
 
         $merged = array_merge($defaults, $settings);
@@ -531,11 +533,28 @@ class ManageSiteSettings extends Page implements Forms\Contracts\HasForms
                                             ->default('5.000')
                                             ->columnSpanFull(),
 
+                                        Forms\Components\Select::make('premiumFreeAdMode')
+                                            ->label('Mode Klaim Premium 1 Jam Gratis')
+                                            ->options([
+                                                'direct_link' => 'Direct Link 15 Detik (Membuka Tab Baru Iklan Smartlink)',
+                                                'banner_script' => 'Banner Script Click (Menampilkan Popup Banner Iklan & Wajib Klik Banner)',
+                                            ])
+                                            ->default('direct_link')
+                                            ->required()
+                                            ->columnSpanFull(),
+
                                         Forms\Components\TextInput::make('premiumFreeAdUrl')
-                                            ->label('Link Iklan Smartlink / Sponsor (Klaim Premium 1 Hari Gratis)')
+                                            ->label('Link Iklan Smartlink / Sponsor (Untuk Mode Direct Link)')
                                             ->placeholder('https://scriptmlbb.com atau URL Smartlink Iklan')
                                             ->default('https://scriptmlbb.com')
-                                            ->helperText('URL Smartlink iklan sponsor yang akan dibuka di tab baru saat pengguna mengklik tombol "Klaim Premium 1 Hari Gratis (15s)"')
+                                            ->helperText('URL Smartlink iklan sponsor yang akan dibuka di tab baru saat pengguna mengklik tombol "Klaim Premium 1 Jam Gratis (15s)" pada mode Direct Link')
+                                            ->columnSpanFull(),
+
+                                        Forms\Components\Textarea::make('premiumFreeAdScript')
+                                            ->label('Skrip HTML / JS Banner Iklan Sponsor (Untuk Mode Banner Script Click)')
+                                            ->placeholder("<!-- Masukkan kode skrip iklan banner dari Ad Network di sini -->\n<script async src=\"...\"></script>")
+                                            ->helperText('Kode skrip iklan HTML/JS yang akan ditampilkan di dalam Popup Banner Iklan khusus saat pengguna mengklik tombol klaim gratis.')
+                                            ->rows(4)
                                             ->columnSpanFull(),
                                     ]),
                             ]),

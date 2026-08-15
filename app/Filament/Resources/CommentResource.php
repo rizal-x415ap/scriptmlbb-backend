@@ -41,11 +41,26 @@ class CommentResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('author_name')->searchable(),
-                Tables\Columns\TextColumn::make('article.title')->limit(30),
-                Tables\Columns\TextColumn::make('content')->limit(50),
+                Tables\Columns\TextColumn::make('author_name')
+                    ->label('Nama Pengirim')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('author_email')
+                    ->label('Email Pengirim')
+                    ->searchable()
+                    ->sortable()
+                    ->icon('heroicon-m-envelope')
+                    ->copyable(),
+                Tables\Columns\TextColumn::make('article.title')
+                    ->label('Artikel')
+                    ->searchable()
+                    ->limit(30),
+                Tables\Columns\TextColumn::make('content')
+                    ->label('Isi Komentar')
+                    ->searchable()
+                    ->limit(50),
                 Tables\Columns\IconColumn::make('is_author_reply')
-                    ->label('Admin Reply')
+                    ->label('Balasan Admin')
                     ->boolean(),
                 Tables\Columns\TextColumn::make('status')
                     ->badge()
@@ -53,9 +68,14 @@ class CommentResource extends Resource
                         'pending' => 'warning',
                         'approved' => 'success',
                         'spam' => 'danger',
+                        default => 'gray',
                     }),
-                Tables\Columns\TextColumn::make('created_at')->dateTime(),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->label('Tanggal')
+                    ->dateTime('d M Y, H:i')
+                    ->sortable(),
             ])
+            ->defaultSort('created_at', 'desc')
             ->actions([
                 Tables\Actions\Action::make('reply')
                     ->label('Reply')
